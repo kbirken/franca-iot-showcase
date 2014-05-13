@@ -1,0 +1,42 @@
+' Design of Franca IoT showcase
+
+@startuml
+
+
+cloud {
+	[MQTT Server]
+}
+
+node "RobotArm Hardware" {
+	[RobotArm Device] --> [RobotArm]
+}
+
+node "Raspberry PI" {
+	package "GUI Client (node.js or CommonAPI/C++ ?)" {
+		[UI Handler] --> [Franca/MQTT Adapter]
+	}
+	
+	package "Robot Client (Java or CommonAPI/C++ ?)" {
+		[RobotArm Application] --> [RobotArm Device] : serial
+	}
+	
+	package "Other Client(s)" {
+		[Client Application]
+	}
+	
+}
+
+node "Laptop or Tablet" {
+	package "Browser" {
+		[HTML5 UI]
+	}
+	
+}
+
+[HTML5 UI] --> [UI Handler] : Franca/WAMP
+
+[Franca/MQTT Adapter] --> [MQTT Server] : MQTT/IP
+[RobotArm Application] --> [MQTT Server] : MQTT/IP
+[Client Application] --> [MQTT Server] : MQTT/IP
+
+@enduml
