@@ -13,11 +13,12 @@ node "RobotArm Hardware" {
 
 node "Raspberry PI" {
 	package "GUI Client (node.js or CommonAPI/C++ ?)" {
-		[UI Handler] --> [Franca/MQTT Adapter]
+		[UI Handler] --> [Franca/MQTT Adapter (UI)]
 	}
 	
 	package "Robot Client (Java or CommonAPI/C++ ?)" {
 		[RobotArm Application] --> [RobotArm Device] : serial
+		[RobotArm Application] --> [Franca/MQTT Adapter (Robot)]
 	}
 	
 	package "Other Client(s)" {
@@ -35,8 +36,8 @@ node "Laptop or Tablet" {
 
 [HTML5 UI] --> [UI Handler] : Franca/WAMP
 
-[Franca/MQTT Adapter] --> [MQTT Server] : MQTT/IP
-[RobotArm Application] --> [MQTT Server] : MQTT/IP
+[Franca/MQTT Adapter (UI)] --> [MQTT Server] : MQTT/IP
+[Franca/MQTT Adapter (Robot)] --> [MQTT Server] : MQTT/IP
 [Client Application] --> [MQTT Server] : MQTT/IP
 
 @enduml
