@@ -2,14 +2,14 @@ package org.franca.examples.mqtt.control;
 
 import org.eclipse.paho.client.mqttv3.IMqttClient;
 import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.eclipse.paho.client.mqttv3.MqttTopic;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 public class Activator implements BundleActivator {
 
 	private static BundleContext context;
+	private IMqttClient client;
+	private ControlDispatcher dispatcher;
 
 	static BundleContext getContext() {
 		return context;
@@ -18,46 +18,51 @@ public class Activator implements BundleActivator {
 	public void start(BundleContext bundleContext) throws Exception {
 		Activator.context = bundleContext;
 
-		IMqttClient client = null;
 		try {
-			String topicId = "topic1";
 			String clientId = "client1";
-			String serverURI = "tcp://vm-testit.itemis.de:1883";
-			//String serverURI = "tcp://localhost:1883";
+			// String serverURI = "tcp://vm-testit.itemis.de:1883";
+			String serverURI = "tcp://localhost:1883";
 			client = new MqttClient(serverURI, clientId);
 
-			MessageListener listener = new MessageListener();
-			client.setCallback(listener);
+			dispatcher = new ControlDispatcher();
+			dispatcher.start();
+
+			client.setCallback(dispatcher);
 			client.connect();
-			client.subscribe(topicId);
 
-			MqttTopic topic = client.getTopic(topicId);
-			for (int i = 0; i < 10; i++) {
-				MqttMessage message = new MqttMessage(("message" + i).getBytes());
-				topic.publish(message);
-			}
-			
-			Thread.sleep(2000);
+			client.subscribe("control/x");
+			client.subscribe("control/y");
+			client.subscribe("control/z");
+			client.subscribe("control/aa");
+			client.subscribe("control/rot");
+			client.subscribe("control/x");
+			client.subscribe("control/move");
+			client.subscribe("control/grab");
+			client.subscribe("control/shutdown");
 
-			for (int i = 0; i < 10; i++) {
-				MqttMessage msg = listener.getNextMessage(topicId);
-				assert msg != null;
-				assert msg.toString().startsWith("message");
-				assert topic.getName().equals(topicId);
-				System.out.println(msg);
-			}
-
-			client.disconnect();
+			// MqttTopic topic = client.getTopic(topicId);
+			// for (int i = 0; i < 10; i++) {
+			// MqttMessage message = new MqttMessage(("message" +
+			// i).getBytes());
+			// topic.publish(message);
+			// }
 		}
-		finally {
-			if (client != null) {
-				client.close();
-			}
+		catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	public void stop(BundleContext bundleContext) throws Exception {
 		Activator.context = null;
+
+		if (dispatcher != null) {
+			dispatcher.stopDispatcher();
+		}
+
+		if (client != null) {
+			client.disconnect();
+			client.close();
+		}
 	}
 
 }
