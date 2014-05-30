@@ -1,4 +1,4 @@
-package org.franca.tools.mqtt.java;
+package org.franca.examples.mqtt.control;
 
 import org.eclipse.paho.client.mqttv3.IMqttClient;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -22,7 +22,8 @@ public class Activator implements BundleActivator {
 		try {
 			String topicId = "topic1";
 			String clientId = "client1";
-			String serverURI = "tcp://localhost:1883";
+			String serverURI = "tcp://vm-testit.itemis.de:1883";
+			//String serverURI = "tcp://localhost:1883";
 			client = new MqttClient(serverURI, clientId);
 
 			MessageListener listener = new MessageListener();
@@ -35,6 +36,8 @@ public class Activator implements BundleActivator {
 				MqttMessage message = new MqttMessage(("message" + i).getBytes());
 				topic.publish(message);
 			}
+			
+			Thread.sleep(2000);
 
 			for (int i = 0; i < 10; i++) {
 				MqttMessage msg = listener.getNextMessage(topicId);

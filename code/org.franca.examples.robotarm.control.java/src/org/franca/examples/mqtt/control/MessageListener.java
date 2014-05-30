@@ -1,4 +1,4 @@
-package org.franca.tools.mqtt.java;
+package org.franca.examples.mqtt.control;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -44,6 +44,7 @@ public class MessageListener implements MqttCallback {
 	}
 
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
+		System.out.println("Message arrived " + message);
 		synchronized (messageMap) {
 			if (messageMap.get(topic) == null) {
 				messageMap.put(topic, new LinkedList<MqttMessage>());
