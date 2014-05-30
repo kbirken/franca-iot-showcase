@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Franca Robot Arm Example</title>
+	<script src="gen/org/franca/examples/robotarm/RobotArmUIProxy.js"></script>
+</head>
+<body>
+An example website
+
+<script type="text/javascript">
+if (window.addEventListener) { // Mozilla, Netscape, Firefox
+    window.addEventListener('load', WindowLoad, false);
+} else if (window.attachEvent) { // IE
+    window.attachEvent('onload', WindowLoad);
+}
+
+function WindowLoad(event) {
+    var proxy = new RobotArmUIProxy();
+	proxy.connect('ws://localhost:8081');
+	proxy.setX(1);
+	proxy.shutdown();
+}
+</script>
+
+</body>
+</html>

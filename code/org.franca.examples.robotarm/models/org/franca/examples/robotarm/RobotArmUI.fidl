@@ -1,0 +1,26 @@
+package org.franca.examples.robotarm
+
+interface RobotArmUI {
+
+	attribute Int32 x
+	attribute Int32 y
+	attribute UInt32 z
+	attribute Int32 aa
+	attribute Int32 rot
+	attribute Int32 pressure readonly
+
+	method move {
+		in {
+			UInt32 time
+		}
+	}
+	
+	method grab {
+		in {
+			UInt32 openMM
+		}
+	}
+	
+	method shutdown {
+	}
+}
