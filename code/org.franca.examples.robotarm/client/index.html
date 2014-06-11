@@ -1,28 +1,100 @@
 <!doctype html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title>Franca Robot Arm Example</title>
-	<script src="gen/org/franca/examples/robotarm/RobotArmUIProxy.js"></script>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>RobotArm Controller with Franca and MQTT</title>
+
+<link rel="stylesheet" type="text/css" href="css/style.css"></link>
+<link rel="stylesheet"
+	href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css"></link>
+
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script
+	src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+<script src="gen/org/franca/examples/robotarm/RobotArmUIProxy.js"></script>
+<script src="js/client.js"></script>
 </head>
 <body>
-An example website
+	<header id="constantheader-wrapper">
+		<div data-role="header" data-position="fixed" data-theme="a">
+			<h1>RobotArm Controller with Franca and MQTT</h1>
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#pHome" data-transition="flip">Home</a></li>
+					<li><a href="#pAbout" data-transition="flip">About</a></li>
+				</ul>
+			</div>
+		</div>
+	</header>
 
-<script type="text/javascript">
-if (window.addEventListener) { // Mozilla, Netscape, Firefox
-    window.addEventListener('load', WindowLoad, false);
-} else if (window.attachEvent) { // IE
-    window.attachEvent('onload', WindowLoad);
-}
+	<div data-role="page" id="pHome" pagetype="standard"
+		class="franca-example">
+		<div role="main" class="ui-content franca-content">
+			<form>
+				<table>
+					<tr>
+						<td><label for="forwardBackwardValue">Forward/Backward:</label>
+						</td>
+						<td><input type="number" data-clear-btn="false"
+							name="forwardBackwardValue" id="forwardBackwardValue" value="200">
+						</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td width="150px"><label for="leftRightValue">Left/Right:</label>
+						</td>
+						<td><input type="number" data-clear-btn="false"
+							name="leftRightValue" id="leftRightValue" value="0"></td>
+						<td width="80px"></td>
+						<td><input type="button" value="Move" id="moveButton"></td>
+					</tr>
+					<tr>
+						<td><label for="upDownValue">Up/Down:</label></td>
+						<td><input type="number" data-clear-btn="false"
+							name="upDownValue" id="upDownValue" value="180"></td>
+						<td></td>
+						<td><input type="button" value="Safe" id="safeButton"></td>
+					</tr>
+					<tr>
+					<tr>
+				</table>
 
-function WindowLoad(event) {
-    var proxy = new RobotArmUIProxy();
-	proxy.connect('ws://localhost:8081');
-	proxy.setX(1);
-	proxy.shutdown();
-}
-</script>
+				<table>
+					<tr>
+						<td width="150px"><label>Angle of attack:</label></td>
+						<td><input type="button" value="+" id="aaPlusButton"></td>
+						<td><input type="button" value="-" id="aaMinusButton"></td>
+					</tr>
 
+					<tr>
+						<td><label>Rotate:</label></td>
+						<td><input type="button" value="+" id="rotatePlusButton"></td>
+						<td><input type="button" value="-" id="rotateMinusButton"></td>
+					</tr>
+
+					<tr>
+						<td><label>Grab:</label></td>
+						<td><input type="button" value="+" id="grabPlusButton"></td>
+						<td><input type="button" value="-" id="grabMinusButton"></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+
+	<div data-role="page" id="pAbout" pagetype="standard"
+		class="franca-example" data-theme="a">
+		<div role="main" class="ui-content franca-content">
+			<h2>About this demo</h2>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		initFixedHeaders();
+		initApp();
+	</script>
 </body>
 </html>
