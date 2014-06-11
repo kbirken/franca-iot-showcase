@@ -2,6 +2,11 @@ package org.franca.examples.mqtt.control;
 
 import org.eclipse.paho.client.mqttv3.IMqttClient;
 import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.franca.examples.mqtt.control.common.DirectControlDispatcher;
+import org.franca.examples.mqtt.control.common.IRobotArmDirectControl;
+import org.franca.examples.mqtt.control.common.IRobotArmPosControl;
+import org.franca.examples.mqtt.control.common.InverseKinematicsControl;
+import org.franca.examples.mqtt.control.serial.RobotArmPhysical;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
@@ -9,7 +14,10 @@ public class Activator implements BundleActivator {
 
 	private static BundleContext context;
 	private IMqttClient client;
-	private ControlDispatcher dispatcher;
+	private ControlDispatcher messageDispatcher;
+	private IRobotArmDirectControl robotArmDirectControl;
+	private IRobotArmPosControl robotArmControl;
+	private DirectControlDispatcher directControlDispatcher;
 
 	static BundleContext getContext() {
 		return context;
@@ -17,6 +25,10 @@ public class Activator implements BundleActivator {
 
 	public void start(BundleContext bundleContext) throws Exception {
 		Activator.context = bundleContext;
+		this.robotArmDirectControl = RobotArmPhysical.createInstance("/dev/tty.usbserial-FTF7AJ8S", true);
+		this.directControlDispatcher = new DirectControlDispatcher();
+		this.directControlDispatcher.addClient(robotArmDirectControl);
+		this.robotArmControl = new InverseKinematicsControl(directControlDispatcher, true);
 
 		try {
 			String clientId = "client1";
@@ -24,10 +36,10 @@ public class Activator implements BundleActivator {
 			String serverURI = "tcp://localhost:1883";
 			client = new MqttClient(serverURI, clientId);
 
-			dispatcher = new ControlDispatcher();
-			dispatcher.start();
+			messageDispatcher = new ControlDispatcher(this.robotArmControl);
+			messageDispatcher.start();
 
-			client.setCallback(dispatcher);
+			client.setCallback(messageDispatcher);
 			client.connect();
 
 			client.subscribe("control/x");
@@ -35,17 +47,9 @@ public class Activator implements BundleActivator {
 			client.subscribe("control/z");
 			client.subscribe("control/aa");
 			client.subscribe("control/rot");
-			client.subscribe("control/x");
 			client.subscribe("control/move");
 			client.subscribe("control/grab");
 			client.subscribe("control/shutdown");
-
-			// MqttTopic topic = client.getTopic(topicId);
-			// for (int i = 0; i < 10; i++) {
-			// MqttMessage message = new MqttMessage(("message" +
-			// i).getBytes());
-			// topic.publish(message);
-			// }
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -54,14 +58,20 @@ public class Activator implements BundleActivator {
 
 	public void stop(BundleContext bundleContext) throws Exception {
 		Activator.context = null;
+		this.robotArmDirectControl = null;
 
-		if (dispatcher != null) {
-			dispatcher.stopDispatcher();
+		if (messageDispatcher != null) {
+			messageDispatcher.stopDispatcher();
 		}
 
 		if (client != null) {
-			client.disconnect();
-			client.close();
+			try {
+				client.disconnect();
+				client.close();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
