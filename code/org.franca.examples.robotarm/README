@@ -1,0 +1,9 @@
+The following node modules are required:
+- mime
+- mqtt
+- websocket.io
+- ws
+
+Install these to the root folder so that both the client and the server code can use it.
+
+Run the server by simply issuing the node server.js command, while the client must be run from the browser itself.
