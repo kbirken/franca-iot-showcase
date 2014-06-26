@@ -7,37 +7,46 @@ cloud {
 	[MQTT Server]
 }
 
+
 node "RobotArm Hardware" {
 	[RobotArm Device] --> [RobotArm]
 }
 
-node "Raspberry PI" {
-	package "GUI Client (node.js or CommonAPI/C++ ?)" {
-		[UI Handler] --> [Franca/MQTT Adapter (UI)]
-	}
-	
-	package "Robot Client (Java or CommonAPI/C++ ?)" {
+
+' node "RobotArm Controller" {
+' 	package "Robot Client (Java or CommonAPI/C++ ?)" {
+	package "Robot Client (Java)" {
 		[RobotArm Application] --> [RobotArm Device] : serial
 		[RobotArm Application] --> [Franca/MQTT Adapter (Robot)]
 	}
 	
-	package "Other Client(s)" {
-		[Client Application]
-	}
+'	package "Other Client(s)" {
+'		[Client Application]
+'	}
 	
-}
+' }
 
-node "Laptop or Tablet" {
+
+' node "UI Backend" {
+'	package "GUI Client (node.js or CommonAPI/C++ ?)" {
+	package "GUI Client (JS / node.js)" {
+		[UI Handler] --> [Franca/MQTT Adapter (UI)]
+	}
+
+' }
+
+
+' node "Laptop or Tablet" {
 	package "Browser" {
 		[HTML5 UI]
 	}
 	
-}
+' }
 
 [HTML5 UI] --> [UI Handler] : Franca/WAMP
 
 [Franca/MQTT Adapter (UI)] --> [MQTT Server] : MQTT/IP
 [Franca/MQTT Adapter (Robot)] --> [MQTT Server] : MQTT/IP
-[Client Application] --> [MQTT Server] : MQTT/IP
+' [Client Application] --> [MQTT Server] : MQTT/IP
 
 @enduml
