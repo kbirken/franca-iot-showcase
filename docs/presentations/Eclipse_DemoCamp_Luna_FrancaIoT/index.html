@@ -330,7 +330,7 @@ function pathArrow2(length, width, tip) {
 	<img width="400" src="resources/IMG_fra_01.png">
 </section>
 
-<!-- basics @ /Users/birken/Documents/Presentations/modules/org.nanosite.remix.library/modules/franca/10-basics.html -->
+<!-- franca_basics @ /Users/birken/Documents/Presentations/modules/org.nanosite.remix.presentations/presentations/140702_DemoCampLuna/20-franca_basics.html -->
 <section>
 	<h2>Franca</h2>
 	<table>
@@ -385,7 +385,7 @@ var history = [
 //	{ when: "October 2011", what: 'Start of prototype implementation of Franca' },
 	{ when: "November 2011", what: 'Initial release of Franca' },
 	{ when: "March 2012", what: 'Franca published as OSS on EclipseLabs' },
-	{ when: "December 2012", what: 'First non-Automotive applications' },
+//	{ when: "December 2012", what: 'First non-Automotive applications' },
 	{ when: "March 2013", what: 'Common API C++' },
 //	{ when: "October 2013", what: 'Contracts, UI improvements, tool integrations' },
 	{ when: "November 2013", what: 'Eclipse project proposal' }
@@ -409,7 +409,7 @@ showHistoryDiagram(h, 500, 200, history, "arrow_history");
 
 <section>
 	<h2>An example interface definition</h2>
-	<img src="resources/franca_simple_screenshot.png" width="500px" />
+	<img src="resources/ui_interface_screenshot.png" width="450px" />
 </section>
 
 <!-- websockets @ /Users/birken/Documents/Presentations/modules/org.nanosite.remix.library/modules/franca_examples/20-websockets.html -->
@@ -468,91 +468,6 @@ showHistoryDiagram(h, 500, 200, history, "arrow_history");
 	<p><small>Architecture. The yellow layer is generated from Franca interfaces.</small></p>
 </section>
 
-<section>
-	<h2>HTML5 UI with Franca and CommonAPI</h2>
-	<br/>
-	<div id="commonapi_stack"/>
-	<p><small>Architecture. The yellow layer is generated from Franca interfaces.</small></p>
-</section>
-
-<section>
-	<h2>HTML5 UI with Franca: Live demo</h2>
-	<center>
-	<table class="tabletwo" >
-	<tr><td>
-	<div id="tacho"></div>
- 	</td><td>
- 	</td><td>
-	<form>
-	<hr/>
-    <p><input id="m1" type="button" value="Silence" class="button1"></p>
-    <p><input id="m2" type="button" value="Pop" class="button1"></p>
-    <p><input id="m3" type="button" value="Techno" class="button1"></p>
-	</form>
-	<hr/>
-	<center>
- 	<p id="tClock"></p>
- 	</center>
-	</td></tr>
-	<tr><td colspan="3" align="center"><p id="current-title"></p></td></tr>
-	</table>
-	</center>
-</section>
-
-<section>
-	<h2>HTML5 UI with Franca: Code examples</h2>
-	<br/>
-	<table class="two" width="100%">
-	<tr>
-	<td>
-	<p>Franca interface</p>
-	<pre><code>interface SimpleUI {
-  attribute String clock
-
-  method playMusic {
-    in { Genre genre }
-  }
-
-  broadcast updateVelocity {
-    out { UInt16 velocity }
-  }
-
-  enumeration Genre {
-    M_NONE M_POP M_TECHNO
-  }
-}</code></pre></td>
-	<td>
-	<p>Client-side JS</p>
-	<pre><code>var proxy = new SimpleUIProxy();
-proxy.connect('ws://localhost:8181');
-
-proxy.onChangedClock = function(clock) {
-  $('#tClock').html = clock;
-};
-
-proxy.signalUpdateVelocity =
-  function(velocity) {
-    tacho.set(velocity);
-  };
-
-// ... on button press:
-proxy.playMusic(Genre.M_POP);</code></pre>
-<p align=middle><small>SimpleUIProxy is generated from Franca-file.</small></p>
-	</td></tr>
-	</table>
-</section>
-
-<section>
-	<h2>Output of Franca Websockets generator</h2>
-	<br/>
-	<p>Generated for each Franca interface:</p>
-	<ul>
-	<li>client-side proxy (used by JS on client side)</li>
-	<li>blueprints for client-side manual code</li>
-	<li>server-side stub (used by node.js/JS on server side)</li>
-	<li>blueprints for server-side manual code</li>
-	</ul>
-</section>
 
 <section>
 	<h2>Benefits of using Franca for HTML5 UI</h2>
@@ -751,12 +666,35 @@ function onClick(buttonId, func) {
 <!-- mqtt @ /Users/birken/Documents/Presentations/modules/org.nanosite.remix.presentations/presentations/140702_DemoCampLuna/30-mqtt.html -->
 
 <section>
-	<h2>MQTT, Eclipse Paho and Internet of Things</h2>
+	<h2>Internet of Things</h2>
 	<ul>
-	<li>TODO, ca 3 slides (MQTT, Mosqitto, Eclipse Paho)</li>
+		<li>Let's connect all different kinds of things together within the Internet</li>
+		<li>Not just laptops and mobile phones, but all kinds of sensors and devices</li>
+		<li>Advanced connectivity of devices, more than simple M2M communication</li>
 	</ul>
 </section>
 
+<section>
+	<h2>MQTT</h2>
+	<ul>
+		<li>Message Queue Telemetry Transport</li>
+		<li>Publish-subscribe based messaging protocol</li>
+		<li>Light-weight (small message overhead)</li>
+		<li>Based on the TCP/IP protocol</li>
+		<li>Various QoS for message delivery (at least once, at most once, exactly once)</li>
+		<li>Designed to be usable in constrained environments</li>
+		<li>Mosquitto: Message broker implementation</li>
+	</ul>
+</section>
+
+<section>
+	<img src="resources/EclipsePahoLogo.png" width="400" />
+	<ul>
+		<li>Open-source Eclipse project</li>
+		<li>MQTT Client implementation</li>
+		<li>Various languages (JS, Java, C/C++, Lua)</li>
+	</ul>
+</section>
 
 <section>
 	<h2>Franca/IoT showcase</h2>
@@ -812,10 +750,33 @@ function onClick(buttonId, func) {
 <!-- summary @ /Users/birken/Documents/Presentations/modules/org.nanosite.remix.presentations/presentations/140702_DemoCampLuna/90-summary.html -->
 
 <section>
-	<h2></h2>
+	<h2>Final points</h2>
 	<ul>
-	<li></li>
+	<li>Benefits of using Franca
+		<ul>
+		<li>control logic could be designed independent from implementation</li>
+		<li>part of the implementation could be generated automatically</li>
+		<li>eases the integration of components</li>
+		</ul>
+	</li>
+	<li>final integration of showcase could be done in less than 1h</li>
+	<li>Future work: automatic generation of Franca/MQTT connector</li>
 	</ul>
+</section>
+
+
+<section>
+	<p>
+	<img src="resources/franca_feature_overview.png" width="300px" height="250px" />
+	&nbsp;
+	<img src="resources/EclipsePahoLogo.png" width="300px" height="250px" />
+	</p>
+	<h3>Thanks for your attention!</h3>
+	<p>
+	<img src="resources/franca_iot_showcase_design.png" width="300px" height="250px" />
+	&nbsp;
+	<img src="resources/Robo1.jpg" width="300px" height="250px" />
+	</p>
 </section>
 
 
