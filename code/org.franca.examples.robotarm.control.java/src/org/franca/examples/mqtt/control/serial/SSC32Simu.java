@@ -8,9 +8,9 @@ public class SSC32Simu implements ISSC32 {
 	}
 
 	public void shutdown() {
-		delay(500);
 		reset();
-		delay(500);
+		
+		// no serial connection, we do not have to shutdown anything
 	}
 
 	public void delay(int millisec) {
@@ -23,6 +23,7 @@ public class SSC32Simu implements ISSC32 {
 
 	public boolean reset() {
 		int t = 1000;
+		delay(t);
 		System.out.println("SSC32: RESET");
 		delay(t);
 		return true;

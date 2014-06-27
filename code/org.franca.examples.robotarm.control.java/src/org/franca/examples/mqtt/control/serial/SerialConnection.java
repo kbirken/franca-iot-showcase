@@ -80,6 +80,7 @@ public class SerialConnection {
 
 
 	public boolean send (String msg) {
+		System.out.println(msg);
 		if (outputStream!=null) {
 			String msg1 = msg + "\r";
 			try {

@@ -1,0 +1,17 @@
+package org.franca.examples.robotarm
+
+interface RobotArmCube {
+	attribute Int32 leftCubeCount readonly
+	attribute Int32 rightCubeCount readonly
+	
+	method moveLeft {
+		out {
+			Boolean ok
+		}
+	}
+	method moveRight {
+		out {
+			Boolean ok
+		}
+	}
+} 

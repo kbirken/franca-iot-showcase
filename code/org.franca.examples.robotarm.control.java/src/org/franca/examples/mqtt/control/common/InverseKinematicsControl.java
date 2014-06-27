@@ -30,6 +30,11 @@ public class InverseKinematicsControl implements IRobotArmPosControl {
 	}
 
 	@Override
+	public boolean reset() {
+		return base.reset();
+	}
+
+	@Override
 	public boolean shutdown() {
 		return base.shutdown();
 	}
@@ -71,6 +76,10 @@ public class InverseKinematicsControl implements IRobotArmPosControl {
 
 		double xHand = s3 * cos(toRadians(aa));
 		double zHand = s3 * sin(toRadians(aa));
+		if (verbose) {
+			logNumber("xHand", xHand);
+			logNumber("zHand", zHand);
+		}
 		double x1 = x2 - xHand;
 		double zrel = (z + zHand) - GeometryAL5D.BASE_HEIGHT;
 		if (verbose) {

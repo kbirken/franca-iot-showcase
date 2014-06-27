@@ -43,14 +43,13 @@ public class RobotArmPhysical implements IRobotArmDirectControl {
 
 	@Override
 	public boolean move(double base, double humerus, double ulna, double hand, double rot, int t) {
-		int a = (int)Math.round(base);
-		int b = (int)Math.round(humerus);
-		int c = (int)Math.round(ulna);
-		int d = (int)Math.round(hand);
-		int r = (int)Math.round(rot);
+		double a = base;
+		double b = humerus;
+		double c = ulna;
+		double d = hand;
 
 		if (verbose)
-			System.out.println("move(" + a + ", " + b + ", " + c + ", " + d + ", " + r + ")");
+			System.out.format("move(%5.1f, %5.1f, %5.1f, %5.1f, %5.1f)\n", a, b, c, d, rot);
 
 		// some basic geometric checks
 		if (b+c < -50) {
@@ -63,23 +62,23 @@ public class RobotArmPhysical implements IRobotArmDirectControl {
 		d = -d;
 		
 		// rot is moving anti-clockwise
-		r = -r;
+		double r = -rot;
 
 		// to calibrate these numbers, use the calibration section in RobotArmApplication
 		double ch0f = 455.0 / 45.0;
 		double ch1f = 345.0 / 45.0;
-		double ch2f = 390.0 / 45.0;
-		double ch3f = 460.0 / 45.0;
+		double ch2f = 480.0 / 45.0;
+		double ch3f = 470.0 / 45.0;
 		double ch5f = 480.0 / 45.0;
 
 		int ch0 = (int)round(1500.0 - a*ch0f);
 		int ch1 = (int)round(1490.0 - b*ch1f);
-		int ch2 = (int)round(1420.0 - c*ch2f);
+		int ch2 = (int)round(1455.0 - c*ch2f);
 		int ch3 = (int)round(1600.0 - d*ch3f);
 		int ch5 = (int)round(1475.0 - r*ch5f);
 		checkRange(0, 800, 2200, ch0);
-		checkRange(1, 900, 2100, ch1);
-		checkRange(2, 900, 2100, ch2);
+		checkRange(1, 850, 2100, ch1);
+		checkRange(2, 820, 2100, ch2);
 		checkRange(3, 500, 2500, ch3);
 		checkRange(5, 500, 2500, ch5);
 
@@ -109,6 +108,11 @@ public class RobotArmPhysical implements IRobotArmDirectControl {
 		ssc32.delay(millisec);
 	}
 	
+
+	@Override
+	public boolean reset() {
+		return ssc32.reset();
+	}
 
 	@Override
 	public boolean shutdown() {

@@ -35,6 +35,7 @@ public class WebsocketGenTest {
 	@Test
 	public void test01() {
 		genAndSave("org/franca/examples/robotarm/RobotArmUI.fidl");
+		genAndSave("org/franca/examples/robotarm/RobotArmCube.fidl");
 	}
 
 	private void genAndSave (String filename) {

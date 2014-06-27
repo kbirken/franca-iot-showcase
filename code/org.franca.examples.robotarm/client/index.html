@@ -14,6 +14,7 @@
 <script
 	src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
 <script src="gen/org/franca/examples/robotarm/RobotArmUIProxy.js"></script>
+<script src="gen/org/franca/examples/robotarm/RobotArmCubeProxy.js"></script>
 <script src="js/client.js"></script>
 </head>
 <body>
@@ -23,6 +24,7 @@
 			<div data-role="navbar">
 				<ul>
 					<li><a href="#pHome" data-transition="flip">Home</a></li>
+					<li><a href="#pCube" data-transition="flip">Cubes</a></li>
 					<li><a href="#pAbout" data-transition="flip">About</a></li>
 				</ul>
 			</div>
@@ -81,6 +83,29 @@
 						<td><input type="button" value="-" id="grabMinusButton"></td>
 					</tr>
 				</table>
+			</form>
+		</div>
+	</div>
+
+	<div data-role="page" id="pCube" pagetype="standard"
+		class="franca-example" data-theme="a">
+		<div role="main" class="ui-content franca-content">
+			<h2>Cube packing</h2>
+
+			<form>
+				<div class="ui-grid-b">
+					<div class="ui-block-a" style="width: 200px">
+						<label id="leftCubeCountLabel" style="font-size: 300px"></label>
+					</div>
+					<div class="ui-block-b" align="center" >
+						<input type="button" value="Move Right" id="moveCubeRight"
+							data-icon="arrow-r"><input type="button"
+							value="Move Left" id="moveCubeLeft" data-icon="arrow-l">
+					</div>
+					<div class="ui-block-c" style="width: 200px">
+						<label id="rightCubeCountLabel" style="font-size: 300px"></label>
+					</div>
+				</div>
 			</form>
 		</div>
 	</div>

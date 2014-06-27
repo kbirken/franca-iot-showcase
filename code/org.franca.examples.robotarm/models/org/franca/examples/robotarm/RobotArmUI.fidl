@@ -21,6 +21,6 @@ interface RobotArmUI {
 		}
 	}
 	
-	method shutdown {
+	method reset {
 	}
 }
