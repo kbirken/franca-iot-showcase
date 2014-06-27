@@ -35,13 +35,10 @@ public class Activator implements BundleActivator {
 			// String serverURI = "tcp://vm-testit.itemis.de:1883";
 			String serverURI = "tcp://localhost:1883";
 			client = new MqttClient(serverURI, clientId);
-
+			
 			messageDispatcher = new ControlDispatcher(this.robotArmControl);
-			messageDispatcher.start();
 
-			client.setCallback(messageDispatcher);
 			client.connect();
-
 			client.subscribe("control/x");
 			client.subscribe("control/y");
 			client.subscribe("control/z");
@@ -49,7 +46,10 @@ public class Activator implements BundleActivator {
 			client.subscribe("control/rot");
 			client.subscribe("control/move");
 			client.subscribe("control/grab");
-			client.subscribe("control/shutdown");
+ 			client.subscribe("control/reset");
+ 			
+			messageDispatcher.start();
+			client.setCallback(messageDispatcher);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

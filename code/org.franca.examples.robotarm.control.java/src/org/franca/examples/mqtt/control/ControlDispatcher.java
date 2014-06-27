@@ -43,8 +43,8 @@ public class ControlDispatcher extends Thread implements MqttCallback {
 				}
 
 				if (payload != Integer.MAX_VALUE) {
-					if (message.topic.equals("control/shutdown")) {
-						this.robotArmControl.shutdown();
+					if (message.topic.equals("control/reset")) {
+						this.robotArmControl.reset();
 					}
 					else if (message.topic.equals("control/move")) {
 						move(currentPosition, payload);
@@ -60,11 +60,9 @@ public class ControlDispatcher extends Thread implements MqttCallback {
 					}
 					else if (message.topic.equals("control/aa")) {
 						this.currentPosition.aa = payload;
-						move(currentPosition);
 					}
 					else if (message.topic.equals("control/rot")) {
 						this.currentPosition.rot = payload;
-						move(currentPosition);
 					}
 					else if (message.topic.equals("control/grab")) {
 						this.robotArmControl.grab(payload);
@@ -128,7 +126,7 @@ public class ControlDispatcher extends Thread implements MqttCallback {
 	}
 
 	private void move(RobotPosition position) {
-		this.move(position, 200);
+		this.move(position, 201);
 	}
 
 	private void move(RobotPosition position, int t) {

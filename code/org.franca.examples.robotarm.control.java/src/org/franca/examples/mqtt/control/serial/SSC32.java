@@ -10,10 +10,8 @@ public class SSC32 implements ISSC32 {
 
 	@Override
 	public void shutdown() {
-		// move to 
-		delay(500);
+		// reset position 
 		reset();
-		delay(500);
 		
 		// shutdown serial connection
 		if (conn!=null) {
@@ -34,17 +32,21 @@ public class SSC32 implements ISSC32 {
 	public boolean reset() {
 		int t = 1000;
 		
+		// initial delay
+		delay(t/2);
+
 		// go to pre-parking
 		String cmd = "#0P1500#1P2000#2P2000#3P700#4P1000#5P1475T" + t;
 		if (! conn.send(cmd))
 			return false;
-		delay(t);
+		delay(t/2);
 
 		// final parking
-		cmd = "#0P1550#1P2020#2P2020#3P750T" + t;
+		cmd = "#0P1500#1P2020#2P2020#3P750T" + t;
 		if (! conn.send(cmd))
 			return false;
-		delay(t);
+		delay(t/2);
+
 		return true;
 	}
 

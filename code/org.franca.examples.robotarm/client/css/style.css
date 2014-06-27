@@ -1,42 +1,61 @@
-
-body, div, img, p {
-	padding:0;
-	margin:0;
-	margin:auto;
+body,div,img,p {
+	padding: 0;
+	margin: 0;
+	margin: auto;
 }
 
 body {
 	font-family: Verdana;
 	font-size: 12px;
 	color: #fff;
-	background-color:#000;
+	background-color: #000;
 }
 
 .franca-example .franca-content {
 	padding-top: 6em;
 }
 
-a:link { color: yellow; } 
-a:visited { color: yellow; }
+a:link {
+	color: yellow;
+}
+
+a:visited {
+	color: yellow;
+}
 
 title {
-	text-align:center;
-	font-family:Georgia,serif;
-	font-size:16px;
-	color:#2E2E2E;
+	text-align: center;
+	font-family: Georgia, serif;
+	font-size: 16px;
+	color: #2E2E2E;
 }
 
-#container { height: 500px; width: 500;}
-
-
+#container {
+	height: 500px;
+	width: 500;
+}
 
 /* Status line */
-#statusline .ui-block-a {
-    width: 80% !important;
+.ui-block-a {
+	display: inline-block;
+	vertical-align: middle;
+	height: 100%;
 }
 
-#statusline .ui-block-b {
-    width: 20% !important;
-    text-align: center;
+.ui-block-b {
+	display: inline-block;
+	vertical-align: middle;
+	height: 100%;
 }
 
+.ui-block-c {
+	display: inline-block;
+	vertical-align: middle;
+	height: 100%;
+}
+
+.mydiv {
+	display: inline-block;
+	vertical-align: middle;
+	height: 100%;
+}
