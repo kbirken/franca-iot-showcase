@@ -16,6 +16,7 @@
 <script src="gen/org/franca/examples/robotarm/RobotArmUIProxy.js"></script>
 <script src="gen/org/franca/examples/robotarm/RobotArmCubeProxy.js"></script>
 <script src="js/client.js"></script>
+
 </head>
 <body>
 	<header id="constantheader-wrapper">
@@ -90,23 +91,37 @@
 	<div data-role="page" id="pCube" pagetype="standard"
 		class="franca-example" data-theme="a">
 		<div role="main" class="ui-content franca-content">
-			<h2>Cube packing</h2>
+			<h1>Cube packing</h1>
 
-			<form>
+			<div data-role="content">
 				<div class="ui-grid-b">
-					<div class="ui-block-a" style="width: 200px">
-						<label id="leftCubeCountLabel" style="font-size: 300px"></label>
+					<div class="ui-block-a" style="width: 350px">
+						<label id="leftCubeCountLabel"
+							style="font-size: 300px; text-align: center;"></label>
 					</div>
-					<div class="ui-block-b" align="center" >
-						<input type="button" value="Move Right" id="moveCubeRight"
-							data-icon="arrow-r"><input type="button"
-							value="Move Left" id="moveCubeLeft" data-icon="arrow-l">
+					<div class="ui-block-b" style="width: 300px">
+						<div class="ui-grid-a" style="width: 300px; height: 600px">
+							<div class="ui-block-a" style="width: 300px; height: 100px;">
+							</div>
+							<div class="ui-block-a" style="width: 300px; height: 100px;">
+								<input type="button" value="Move Right" id="moveCubeRight"
+									data-icon="arrow-r" style="text-align: center;">
+							</div>
+							<div class="ui-block-a" style="width: 300px; height: 100px;">
+								<input type="button" value="Move Left" id="moveCubeLeft"
+									data-icon="arrow-l" style="text-align: center;">
+							</div>
+							<div class="ui-block-a" style="width: 300px; height: 300px;">
+							</div>
+						</div>
+
 					</div>
-					<div class="ui-block-c" style="width: 200px">
-						<label id="rightCubeCountLabel" style="font-size: 300px"></label>
+					<div class="ui-block-c" style="width: 350px">
+						<label id="rightCubeCountLabel"
+							style="font-size: 300px; text-align: center;"></label>
 					</div>
 				</div>
-			</form>
+			</div>
 		</div>
 	</div>
 
@@ -114,6 +129,26 @@
 		class="franca-example" data-theme="a">
 		<div role="main" class="ui-content franca-content">
 			<h2>About this demo</h2>
+
+			<p>
+				The sources for this page can be found in example project <em>org.franca.examples.robotarm</em>.
+			</p>
+			<p>
+				For more details on Franca, please visit the <a
+					href="http://code.google.com/a/eclipselabs.org/p/franca/"
+					target="_blank">Franca homepage</a>!
+			</p>
+			<br />
+			<p>
+				Find a more elaborate showcase of using Franca for HTML5 UIs on
+				github: <a href="https://github.com/kbirken/franca-iot-showcase"
+					target="_blank">franca-html5-showcase</a>!
+			</p>
+			<br /> <br />
+
+			<p>This demo and the Franca JS/Websocket generator was built by
+				Tamás Szabó and Klaus Birken.</p>
+
 		</div>
 	</div>
 
