@@ -6,4 +6,9 @@ The following node modules are required:
 
 Install these to the root folder so that both the client and the server code can use it.
 
-Run the server by simply issuing the node server.js command, while the client must be run from the browser itself.
+Running the example:
+(1) Start the mosquitto server with the command "mosquitto --verbose"
+(2) Start the OSGi application which is responsible for controlling the robot arm. The launch configuration can be found 
+    in the org.franca.examples.mqtt.control plug-in under the name franca_mqtt.launch.
+(3) Start the JS server application with the command "node server.js" 
+(4) Start the JS client application from the browser by simply opening the index.html file
